@@ -1,10 +1,11 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 type Input = {
     type: string,
     label: string,
     placeholder: string,
-    errors?: string[]
+    errors?: string[],
 }
 const Input = ({type, label, placeholder, errors =[]} : Input) => {
   return (
