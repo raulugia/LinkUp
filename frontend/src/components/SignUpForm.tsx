@@ -2,9 +2,6 @@ import React, {useState} from 'react'
 import Button from './Button'
 import Input from './Input'
 import { useNavigate } from 'react-router-dom'
-import { auth } from '../utils/firebase'
-import { createUserWithEmailAndPassword } from "firebase/auth"
-import { Link } from 'react-router-dom'
 import { validateEmail, validatePassword, validateName, validateLocation, validateUsername } from '../utils/helpers'
 import PasswordFeedback from './PasswordFeedback'
 import axiosInstance from '../utils/axiosInstance'
@@ -49,7 +46,7 @@ const SignUpForm = () => {
         city: [],
         country: [],
     })
-
+    
     const handleSubmit = async(e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
 
@@ -75,6 +72,7 @@ const SignUpForm = () => {
         }
     }
 
+    //update useData state onChange
     const handleUserData = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value
         const name = e.target.name
@@ -82,6 +80,7 @@ const SignUpForm = () => {
         setUserData(prevUserData => ({...prevUserData, [name]: value}))
     }
 
+    //validate input data onBlur
     const handleValidation = (e: React.FocusEvent<HTMLInputElement>) => {
         const { name, value } = e.target
         
@@ -100,6 +99,7 @@ const SignUpForm = () => {
         }
     }
 
+    //validate password onChange
     const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value
         setUserData(prevUserData => ({...prevUserData, password: value}))
