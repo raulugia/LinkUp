@@ -19,15 +19,12 @@ const ProtectedRoute = ({children} : { children: React.ReactNode }) => {
           }
         });
     
-        // unsubscribe on unmount
         return () => unsubscribe();
       }, [navigate])
 
   return (
     <>
-        isAuthenticated && (
-            {children}
-        )
+      {isAuthenticated ? children : null}
     </>
   )
 }
