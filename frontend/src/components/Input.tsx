@@ -19,7 +19,7 @@ const Input = ({type, label, name, placeholder, errors =[], onBlur, onChange} : 
             onBlur={onBlur} onChange={onChange}
         />
         {
-            errors.map((error, index) => (
+            type !== "password" && errors.map((error, index) => (
                 <p key={index} className='text-sm text-red-600'>{error}</p>
             ))
         }

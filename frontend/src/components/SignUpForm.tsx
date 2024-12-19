@@ -77,7 +77,15 @@ const SignUpForm = () => {
             setErrors(prevErrors => ({...prevErrors, [name]: isValid ? [] : errors}))
         }
     }
-    
+
+    const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value
+        setUserData(prevUserData => ({...prevUserData, password: value}))
+
+        const { isValid, errors } = validatePassword(value)
+        setErrors(prevErrors => ({...prevErrors, password: isValid? [] : errors}))
+    }
+
   return (
     <form className='flex flex-col justify-between px-28'>
         <div className='mb-8'>
@@ -91,18 +99,11 @@ const SignUpForm = () => {
             </div>
             <Input type="text" label="username" name="username" placeholder='Username' onChange={handleUserData} onBlur={handleValidation} errors={errors.username}/>
             <Input type="email" label="email" name="email" placeholder='Email' onChange={handleUserData} onBlur={handleValidation} errors={errors.email}/>
-            <Input type="password" label="password" name="password" placeholder='Password' onChange={e => setUserData(prevUserData => ({...prevUserData, password: e.target.value}))} onBlur={handleValidation} errors={errors.password}/>
+            <Input type="password" label="password" name="password" placeholder='Password' onChange={handlePassword} errors={errors.password}/>
+            <PasswordFeedback errors={errors.password} isPassword={userData.password.length > 0}/>
         </div>
 
         <Button value="Sign Up" onClick={handleSubmit} disabled={loading} type="button" className='bg-blue-primary text-white'/>
-
-        <div className='flex items-center gap-2 my-10'>
-            <div className='bg-gray-300 h-[1px] w-full'></div>
-            <p className='text-gray-300 text-sm'>or</p>
-            <div className='bg-gray-300 h-[1px] w-full'></div>
-        </div>
-
-        {/* <Button value="Continue with Google" onClick={googleSignIn} disabled={loading} type="button" className="bg-white text-black border border-slate-200 hover:bg-slate-50"/> */}
     </form>
   )
 }

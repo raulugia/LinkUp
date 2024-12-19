@@ -1,4 +1,4 @@
-export const validateEmail = (email: string) => {
+export const validateEmail = (email: string): {isValid: boolean, errorMessage: string} => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if(email.trim().length === 0) {
@@ -14,7 +14,7 @@ export const validateEmail = (email: string) => {
     }
 }
 
-export const validatePassword = (password: string) => {
+export const validatePassword = (password: string): {isValid: boolean, errors: string[]} => {
     const errors: string[] = [];
   
     // Check for at least one lowercase letter
@@ -44,7 +44,7 @@ export const validatePassword = (password: string) => {
   };
 
 type NameType = "first_name" | "last_name"
-export const validateName = (value: string, type: NameType) => {
+export const validateName = (value: string, type: NameType): {isValid: boolean, errors: string[]} => {
 const regex = /^[a-zA-Zà-žÀ-Ž\s'-]+$/;
     const errors: string[] = []
 
@@ -70,13 +70,13 @@ const regex = /^[a-zA-Zà-žÀ-Ž\s'-]+$/;
 }
 
 type Location = "city" | "country"
-export const validateLocation = (value: string, type: Location) => {
+export const validateLocation = (value: string, type: Location): {isValid: boolean, errors: string[]} => {
     const errors: string[] = [];
     const regex = /^[a-zA-Z\s'-]+$/;
 
     if (!value.trim()) {
        errors.push(`${type} cannot be empty`);
-       return {isDataValid: false, errors}
+       return {isValid: false, errors}
     }
 
     if (!regex.test(value)) {
@@ -93,7 +93,7 @@ export const validateLocation = (value: string, type: Location) => {
     };
 };
 
-export const validateUsername = (username: string) => {
+export const validateUsername = (username: string): {isValid: boolean, errors: string[]} => {
     const errors: string[] = []
     const usernameRegex = /^[a-zA-Z0-9_]+$/
 
