@@ -1,4 +1,3 @@
-import React from 'react'
 import blueBg from "../assets/login.jpg"
 import { authText } from '../utils/texts'
 import tick from "../assets/tick.svg"
