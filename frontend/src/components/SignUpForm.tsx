@@ -7,6 +7,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth"
 import { Link } from 'react-router-dom'
 import { validateEmail, validatePassword, validateName, validateLocation, validateUsername } from '../utils/helpers'
 import PasswordFeedback from './PasswordFeedback'
+import axiosInstance from '../utils/axiosInstance'
 
 type UserData = {
     firstName: string,
@@ -38,6 +39,7 @@ const SignUpForm = () => {
         country: "",
     })
     const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
     const [errors, setErrors] = useState<Errors>({
         firstName: [],
         lastName: [],
@@ -48,9 +50,29 @@ const SignUpForm = () => {
         country: [],
     })
 
-    const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleSubmit = async(e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
 
+        const isDataValid = Object.values(errors).every(error => error.length === 0)
+
+        if(!isDataValid){
+            alert("Please ensure that all the fields are valid")
+            return
+        }
+
+        try{
+            setLoading(true)
+
+            const { data } = await axiosInstance.post("/api/create-user", userData)
+
+            if(data.success){
+                navigate("/home")
+            }
+        }catch(error){
+            console.log(error)
+        }finally{
+            setLoading(false)
+        }
     }
 
     const handleUserData = (e: React.ChangeEvent<HTMLInputElement>) => {
