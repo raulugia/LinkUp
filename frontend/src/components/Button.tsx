@@ -10,7 +10,7 @@ type ButtonProps = {
 const Button = ({value, onClick, disabled = false, type, className} : ButtonProps) => {
   return (
     <button value={value} onClick={onClick} disabled={disabled} type={type} 
-        className={`text-white font-semibold py-2 text-lg rounded-md ${className}`}>
+        className={`font-semibold py-2 text-lg rounded-md hover:cursor-pointer ${className}`}>
             {value}
         </button>
   )
