@@ -4,7 +4,7 @@ import Button from '../components/Button'
 import { Link, useNavigate } from "react-router-dom"
 import { validateEmail } from '../utils/helpers'
 import { auth } from '../utils/firebase'
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 type UserData = {
     first_name: string,
@@ -30,6 +30,7 @@ const LoginForm = () => {
   })
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
+  const provider = new GoogleAuthProvider();
 
   const handleSubmit = async(e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -50,6 +51,20 @@ const LoginForm = () => {
         console.log("error: ", error.message)
     }finally{
         setLoading(false)
+    }
+  }
+
+  const googleSignIn = async(e: React.MouseEvent<HTMLButtonElement>) =>{
+    e.preventDefault()
+
+    try{
+        const result = await signInWithPopup(auth, provider)
+
+        if(result && result.user){
+            navigate("/home")
+        }
+    }catch(error){
+
     }
   }
 
@@ -99,7 +114,7 @@ const LoginForm = () => {
             <div className='bg-gray-300 h-[1px] w-full'></div>
         </div>
 
-        <Button value="Continue with Google" onClick={handleSubmit} disabled={loading} type="button" className="bg-white text-black border border-slate-200 hover:bg-slate-50"/>
+        <Button value="Continue with Google" onClick={googleSignIn} disabled={loading} type="button" className="bg-white text-black border border-slate-200 hover:bg-slate-50"/>
     </form>
   )
 }
